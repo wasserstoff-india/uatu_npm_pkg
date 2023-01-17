@@ -1,0 +1,25 @@
+{
+  "name": "uatu",
+  "version": "1.0.0",
+  "description": "npm library for UATU API",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wasserstoff-india/uatu_npm_pkg.git"
+  },
+  "keywords": [
+    "uatu",
+    "npm",
+    "api",
+    "watcher"
+  ],
+  "author": "wasserstoff-innovation-labs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wasserstoff-india/uatu_npm_pkg/issues"
+  },
+  "homepage": "https://github.com/wasserstoff-india/uatu_npm_pkg#readme"
+}
