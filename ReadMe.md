@@ -74,7 +74,7 @@ const nftAssets = await uatu.ask('nfts').then((nftAssets) => {
 });
 ```
 
-### Wallet Object <Wallet>
+### Wallet Object `<Wallet>`
 
 Wallet is an object that contains the wallet `address` and `Transactions`  .
 
