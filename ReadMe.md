@@ -1,8 +1,10 @@
 # UATU Library for JavaScript
 
+
 ## Introduction
 
 This is a JavaScript library for UATU. It is a wrapper for the UATU API. It is written in TypeScript and can be used in both Node.js and the browser. It is also available as a [npm package](https://www.npmjs.com/package/uatu-js).
+
 
 ## Installation
 
@@ -17,6 +19,7 @@ npm install uatu-js
 ```html
 <script src="https://unpkg.com/uatu-js"></script>
 ```
+
 
 ## Usage
 
@@ -74,6 +77,7 @@ const nftAssets = await uatu.ask('nfts').then((nftAssets) => {
 });
 ```
 
+
 ### Wallet Object `<Wallet>`
 
 Wallet is an object that contains the wallet `address` and `Transactions`  .
@@ -93,6 +97,7 @@ Wallet is an object that contains the wallet `address` and `Transactions`  .
 }
 ```
 
+
 ### Asset Object `<Asset>`
 
 Asset is an object that contains the `value` , `symbol` and `chain` of the asset.
@@ -104,6 +109,7 @@ Asset is an object that contains the `value` , `symbol` and `chain` of the asset
   "chain": "<ChainName>",
 }
 ```
+
 
 ### Transaction Object `<Transaction>`
 
@@ -123,6 +129,7 @@ Transaction is an object that contains the `hash` , `fromAddress` , `toAddress` 
   "timestamp": 1629200000
 }
 ```
+
 
 ### NFT Object `<NFT>`
 
@@ -147,9 +154,11 @@ NFT is an object that contains the `token_address` , `token_id` , `owner_of` , `
 }
 ```
 
+
 ### Coin Symbol `<CoinSymbol>`
 
 Coin Symbol is a string that represents the symbol of the coin. e.g. `ETH` , `BTC` , `USDT` , `DAI` . See Full List of Coin Symbols [here]().
+
 
 ### Chain Name `<ChainName>`
 
