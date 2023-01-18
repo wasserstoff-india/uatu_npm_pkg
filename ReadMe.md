@@ -28,7 +28,15 @@ const { UATU } = require('uatu-js');
 const { ethers } = require('ethers');
 
 const wallet = new ethers.Wallet('0x...');
-const uatu = new UATU(wallet);
+/**
+ * Initialize UATU object.
+ * `wallet` is optional here. But then you will have to call uatu.verify(wallet) before using the other functions of the UATU object. If Wallet is provided here, then it will * be verified automatically.
+ * If you are not using ethers.js then you can provide the private key or mnemonic here. e.g. new UATU('0x...') or new UATU('mnemonic')
+ */
+const uatu = new UATU(wallet); 
+
+// No need to call this if wallet is provided in the constructor.
+uatu.verify(wallet); 
 
 // Watch Events for the Wallet Address
 const watcher = uatu.watch();
