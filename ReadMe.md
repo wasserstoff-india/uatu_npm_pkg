@@ -73,7 +73,6 @@ const nftAssets = await uatu.ask('nfts').then((nftAssets) => {
   console.log(nftAssets); // [<NFT>]
 });
 ```
-```
 
 ### Wallet Object <Wallet>
 
