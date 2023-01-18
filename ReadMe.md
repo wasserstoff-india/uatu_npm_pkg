@@ -51,6 +51,12 @@ watcher.on('nft', (nft) => {
   // Receives NFT Object
   console.log(nft); // <NFT>
 });
+watcher.on('error', (error) => {
+  console.log(error);
+});
+watcher.on('disconnected', () => {
+  console.log("UATU disconnected");
+});
 
 // Get Wallets for the Wallet Address
 const wallets = uatu.ask('wallet').then((wallet) => {
