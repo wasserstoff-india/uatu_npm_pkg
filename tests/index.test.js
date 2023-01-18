@@ -9,10 +9,9 @@ let wallet,ua;
 
 beforeAll(async()=>{
   wallet=new ethers.Wallet(privateKey);
-  const address=await wallet.getAddress();
+  const address=wallet.address;
   console.log(address);
   ua=new UATU(wallet,apiKey);
-  ua=await ua.verify(wallet,apiKey);
 })
 
 describe("Npm Test",()=>{

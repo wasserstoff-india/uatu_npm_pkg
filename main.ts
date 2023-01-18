@@ -4,10 +4,10 @@ export default class UATU {
   private address:string = '';
   private version:string="1.0.1";
   private apiKey:string="";
-  private wallet:Wallet;
+  private wallet:Wallet=null;
   constructor(wallet?:Wallet,apiKey?:string) {
     if(wallet) {
-      this.verify(wallet,apiKey!).then((data)=>{return data});
+      this.verify(wallet,apiKey!);
     }
   }
 
@@ -32,9 +32,9 @@ export default class UATU {
     }
   }
 
-  async verify(wallet:Wallet,apiKey:string) {
+  verify(wallet:Wallet,apiKey:string) {
     this.wallet=wallet;
-    this.address = await wallet.getAddress();
+    this.address = wallet.address;
     this.apiKey=apiKey;
     return this;
   }
