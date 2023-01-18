@@ -1,22 +1,28 @@
 import { getQueryResult, getWallet } from "./services/apiService";
-import crypto from "crypto";
+import {ethers,Wallet} from "ethers";
 export default class UATU {
   private address:string = '';
-  private apiKey:string = '';
-  private privateKey:string = '';
-  private version:string="1.0.1"
-  constructor(options?: {address: string, apikey: string, privateKey: string}) {
-    if(options && Object.keys(options).length > 0) {
-      this.verify(options)
+  private version:string="1.0.1";
+  private apiKey:string="";
+  private wallet:Wallet;
+  constructor(wallet?:Wallet,apiKey?:string) {
+    if(wallet) {
+      this.verify(wallet,apiKey!).then((data)=>{return data});
     }
   }
 
-  private getSignature(address:string,privateKey:string){
-    return crypto.createHmac('sha512',privateKey).update(address).digest('hex');
+  // constructor(wallet) 
+
+  private async getSignature(query:string){
+    const message={
+      key:this.apiKey,
+      query:query
+    }
+    return await this.wallet.signMessage(JSON.stringify(message));
   }
 
-  private getHeaders(){
-    const signature= this.getSignature(this.address,this.privateKey);
+  private async getHeaders(query:string){
+    const signature= await this.getSignature(query);
     return {
       headers:{
         address:this.address,
@@ -26,41 +32,40 @@ export default class UATU {
     }
   }
 
-  verify({address,apikey,privateKey}:{address:string, apikey:string, privateKey:string}) {
-    this.address = address;
-    this.apiKey = apikey;
-    this.privateKey = privateKey;
+  async verify(wallet:Wallet,apiKey:string) {
+    this.wallet=wallet;
+    this.address = await wallet.getAddress();
+    this.apiKey=apiKey;
     return this;
   }
 
   async watch() {
     try {
-      if(!this.address || !this.apiKey || !this.privateKey) throw new Error("Call Uatu verify first");
-      const headers=this.getHeaders();
+      if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first By passing wallet and apiKey");
+      const headers=await this.getHeaders("wallet");
       return await getWallet(headers);      
-    } catch (error:any) {
-      console.log(error);      
-      return null;
+    } catch (error:any) {     
+      return error["response"];
     }
   }
   
   async ask(query:string) {
     try {
-      if(!this.address || !this.apiKey || !this.privateKey) throw new Error("Call Uatu verify first");
-      const headers=this.getHeaders();
+      if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first  By passing wallet and apiKey");
+      const headers=await this.getHeaders(query);
       return await getQueryResult(query,headers);      
-    } catch (error) {
-      console.log(error);      
-      return null;      
+    } catch (error:any) {         
+      return error["response"];      
     }
   }
-
   
 }
 
 /**
  * 
  * 
+ * const wallet = new ethers.Wallet( privateKey )
+ * new UATU(wallet)
 const options = {
   address = "address";
   apikey = "apikey";
