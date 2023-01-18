@@ -1,15 +1,15 @@
-const EVMURL="http://localhost:8001/";
+const EVMURL="http://localhost:8001";
 import axios from "axios";
 
 export const getWallet=async(headers:Object)=>{ 
   const res=await axios.get(`${EVMURL}/watch-me`,headers);
-  console.log(res);
+  return res;
 }
 
 export const getQueryResult=async(query:string,headers:Object)=>{
   let res;
   switch (query) {
-    case "transacion":
+    case "transaction":
       res=await axios.get(`${EVMURL}/getTransactions`,headers); 
       break;
     case "wallet":
@@ -22,5 +22,5 @@ export const getQueryResult=async(query:string,headers:Object)=>{
       res=await axios.get(`${EVMURL}/getNftAssets`,headers);
       break;
   }
-  console.log(res);
+  return res;
 }

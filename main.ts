@@ -9,7 +9,6 @@ export default class UATU {
     if(options && Object.keys(options).length > 0) {
       this.verify(options)
     }
-    this.version = '1.0.1'
   }
 
   private getSignature(address:string,privateKey:string){
@@ -19,9 +18,11 @@ export default class UATU {
   private getHeaders(){
     const signature= this.getSignature(this.address,this.privateKey);
     return {
-      address:this.address,
-      "x-api-key":this.apiKey,
-      "signature":signature
+      headers:{
+        address:this.address,
+        "x-api-key":this.apiKey,
+        "signature":signature
+      }
     }
   }
 
@@ -29,16 +30,29 @@ export default class UATU {
     this.address = address;
     this.apiKey = apikey;
     this.privateKey = privateKey;
+    return this;
   }
 
   async watch() {
-    const headers=this.getHeaders();
-    const res=await getWallet(headers);
+    try {
+      if(!this.address || !this.apiKey || !this.privateKey) throw new Error("Call Uatu verify first");
+      const headers=this.getHeaders();
+      return await getWallet(headers);      
+    } catch (error:any) {
+      console.log(error);      
+      return null;
+    }
   }
-
+  
   async ask(query:string) {
-    const headers=this.getHeaders();
-    const res=await getQueryResult(query,headers);
+    try {
+      if(!this.address || !this.apiKey || !this.privateKey) throw new Error("Call Uatu verify first");
+      const headers=this.getHeaders();
+      return await getQueryResult(query,headers);      
+    } catch (error) {
+      console.log(error);      
+      return null;      
+    }
   }
 
   
