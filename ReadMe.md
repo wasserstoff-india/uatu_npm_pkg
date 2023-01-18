@@ -93,7 +93,7 @@ Wallet is an object that contains the wallet `address` and `Transactions`  .
 }
 ```
 
-### Asset Object <Asset>
+### Asset Object `<Asset>`
 
 Asset is an object that contains the `value` , `symbol` and `chain` of the asset.
 
@@ -105,7 +105,7 @@ Asset is an object that contains the `value` , `symbol` and `chain` of the asset
 }
 ```
 
-### Transaction Object <Transaction>
+### Transaction Object `<Transaction>`
 
 Transaction is an object that contains the `hash` , `fromAddress` , `toAddress` , `value` , `txnType` , `chainId` , `coin` , `blockNumber` , `txnStatus` and `timestamp` of the transaction.
 
@@ -124,7 +124,7 @@ Transaction is an object that contains the `hash` , `fromAddress` , `toAddress` 
 }
 ```
 
-### NFT Object <NFT>
+### NFT Object `<NFT>`
 
 NFT is an object that contains the `token_address` , `token_id` , `owner_of` , `block_number` , `block_number_minted` , `token_hash` , `amount` , `contract_type` , `name` , `symbol` , `token_uri` , `minter_address` , `chainId` and `timestamp` of the NFT.
 
@@ -147,10 +147,10 @@ NFT is an object that contains the `token_address` , `token_id` , `owner_of` , `
 }
 ```
 
-### Coin Symbol <CoinSymbol>
+### Coin Symbol `<CoinSymbol>`
 
 Coin Symbol is a string that represents the symbol of the coin. e.g. `ETH` , `BTC` , `USDT` , `DAI` . See Full List of Coin Symbols [here]().
 
-### Chain Name <ChainName>
+### Chain Name `<ChainName>`
 
 Chain Name is a string that represents the name of the chain. e.g. `Ethereum` , `Binance Smart Chain` , `Polygon` , `Avalanche` . See Full List of Chain Names [here]().
