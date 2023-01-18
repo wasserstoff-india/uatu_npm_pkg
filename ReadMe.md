@@ -28,6 +28,7 @@ const { UATU } = require('uatu-js');
 const { ethers } = require('ethers');
 
 const wallet = new ethers.Wallet('0x...');
+
 /**
  * Initialize UATU object.
  * `wallet` is optional here. But then you will have to call uatu.verify(wallet) before using the other functions of the UATU object. If Wallet is provided here, then it will * be verified automatically.
