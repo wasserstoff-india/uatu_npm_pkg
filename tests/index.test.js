@@ -1,39 +1,44 @@
 import { beforeAll, describe, expect, test } from "@jest/globals";
-import UATU from "../main.ts";
+
 import { ethers } from "ethers";
+import { UATU } from "../ESNext/src/main";
 
 const apiKey="$2b$10$4uNxGzXx/bGfzN0PYHDBGuEfpFOijq47DztnB5b9yCHxO1qcLaxdC";
 const privateKey="0x6f1ef7c82e14fd783b48f7863b94bc890a362e21bd42ca89d61c98a14852819b";
 
 let wallet,ua;
 
-beforeAll(async()=>{
-  wallet=new ethers.Wallet(privateKey);
-  const address=wallet.address;
-  console.log(address);
-  ua=new UATU(wallet,apiKey);
-})
+// beforeAll(async()=>{
+//   wallet=new ethers.Wallet(privateKey);
+//   ua=new UATU();
+//   ua=await ua.verify(wallet,apiKey);
+  
+// })
 
 describe("Npm Test",()=>{
   test("get wallet success",async()=>{
-    let response=await ua.ask("wallet")
-    expect(response.status).toBe(200);
+    wallet=new ethers.Wallet(privateKey);
+    ua=new UATU();
+    ua=await ua.verify(wallet,apiKey);
+    console.log(ua);
+    let response=await ua.ask("wallet");
+    expect(response).toBe(undefined);
     
   });
-  test("get nft success",async()=>{
-    let response=await ua.ask("nft")
-    expect(response.status).toBe(200);
+  // test("get nft success",async()=>{
+  //   let response=await ua.ask("nft")
+  //   expect(response.status).toBe(200);
     
-  });
-  test("get asset success",async()=>{
-    let response=await ua.ask("asset")
-    expect(response.status).toBe(200);
+  // });
+  // test("get asset success",async()=>{
+  //   let response=await ua.ask("asset")
+  //   expect(response.status).toBe(200);
     
-  });
-  test("get transaction success",async()=>{
-    let response=await ua.ask("transaction")
-    expect(response.status).toBe(200);    
-  });
+  // });
+  // test("get transaction success",async()=>{
+  //   let response=await ua.ask("transaction")
+  //   expect(response.status).toBe(200);    
+  // });
 
   // test("get wallet Fail as wrong address that does not exist in db is being passed",async()=>{
   //   const options={

@@ -1,2 +1,4 @@
 node_modules
 /build
+
+#npx tsc --module esnext npx tsc --module commonJs
