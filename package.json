@@ -2,8 +2,8 @@
   "name": "uatu",
   "version": "1.0.0",
   "description": "npm library for UATU API",
-  "main": "./commonJs/src/index.js",
-  "module":"./ESNext/src/index.js",
+  "module": "./commonJs/src/index.js",
+  "main":"./ESNext/src/index.js",
   "scripts": {
     "test": "jest --detectOpenHandles --testEnvironment=node --runInBand ./tests",
     "build": "tsc --module commonjs"

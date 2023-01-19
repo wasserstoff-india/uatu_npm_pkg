@@ -2,7 +2,7 @@ import { getQueryResult, getWallet } from "../services/apiService";
 import {Wallet} from "ethers";
 export class UATU {
   private address:string = '';
-  private version:string="1.0.1";
+  // private version:string="1.0.1";
   private apiKey:string="";
   constructor(private wallet?:Wallet,apiKey?:string) {
     if(wallet) {

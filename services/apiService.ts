@@ -1,4 +1,4 @@
-const EVMURL="http://localhost:8001";
+const EVMURL="http://localhost:8002";
 import axios from "axios";
 
 export const getWallet=async(headers:Object)=>{ 
@@ -30,16 +30,22 @@ export const getWallet=async(headers:Object)=>{
 //   }
 
   export const getQueryResult=async(query:string,headers:Object)=>{
+    let res:InterFaceTypes;
     try {    
       switch (query) {
         case "transactions":
-          return (await axios.get(`${EVMURL}/getTransactions`,headers)).data as Array<Transaction>; 
+          res= (await axios.get(`${EVMURL}/getTransactions`,headers)).data.data as Array<Transaction>; 
+          return res;
         case "wallet":
-          return (await axios.get(`${EVMURL}/getWAllet`,headers)).data as Wallet;
+          res= (await axios.get(`${EVMURL}/getWAllet`,headers)).data.data as Wallet;
+          console.log(res);          
+          return res; 
         case "assets":
-          return (await axios.get(`${EVMURL}/getAssets`,headers)).data as Array<Asset>;  
+          res= (await axios.get(`${EVMURL}/getAssets`,headers)).data.data as Array<Asset>;
+          return res;  
         case "nfts":
-          return (await axios.get(`${EVMURL}/getNftAssets`,headers)).data as Array<NFT>;
+          res= (await axios.get(`${EVMURL}/getNftAssets`,headers)).data.data as Array<NFT>;
+          return res;
         default:
           throw new Error("Invalid Query");  
       }
@@ -50,6 +56,7 @@ export const getWallet=async(headers:Object)=>{
     }
   }
   
+type InterFaceTypes= Wallet | Array<Transaction> | Array<Asset> | Array<NFT>;
 type Wallet={
     "walletAddress":string,
     "assets": Array<Asset>,

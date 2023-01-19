@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, test } from "@jest/globals";
 
 import { ethers } from "ethers";
-import { UATU } from "../ESNext/src/main";
+import { UATU } from "../ESNext/src/index";
 
 const apiKey="$2b$10$4uNxGzXx/bGfzN0PYHDBGuEfpFOijq47DztnB5b9yCHxO1qcLaxdC";
 const privateKey="0x6f1ef7c82e14fd783b48f7863b94bc890a362e21bd42ca89d61c98a14852819b";
@@ -20,9 +20,9 @@ describe("Npm Test",()=>{
     wallet=new ethers.Wallet(privateKey);
     ua=new UATU();
     ua=await ua.verify(wallet,apiKey);
-    console.log(ua);
     let response=await ua.ask("wallet");
-    expect(response).toBe(undefined);
+
+    expect(response).not.toBe(null);
     
   });
   // test("get nft success",async()=>{
