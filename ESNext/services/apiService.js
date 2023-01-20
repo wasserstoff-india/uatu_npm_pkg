@@ -68,12 +68,12 @@ export var getWallet = function (headers) { return __awaiter(void 0, void 0, voi
 //   } catch (error:any) { 
 //     throw new Error(error)
 //   }
-export var getQueryResult = function (query, headers) { return __awaiter(void 0, void 0, void 0, function () {
+export var getQueryResult = function (query, headers, payload) { return __awaiter(void 0, void 0, void 0, function () {
     var res, _a, error_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 11, , 12]);
+                _b.trys.push([0, 12, , 13]);
                 _a = query;
                 switch (_a) {
                     case "transactions": return [3 /*break*/, 1];
@@ -84,27 +84,30 @@ export var getQueryResult = function (query, headers) { return __awaiter(void 0,
                 return [3 /*break*/, 9];
             case 1: return [4 /*yield*/, axios.get("".concat(EVMURL, "/getTransactions"), headers)];
             case 2:
-                res = (_b.sent());
+                res = _b.sent();
                 return [2 /*return*/, transactionResponse(res.data.data)];
             case 3: return [4 /*yield*/, axios.get("".concat(EVMURL, "/getWAllet"), headers)];
             case 4:
-                res = (_b.sent());
+                res = _b.sent();
                 return [2 /*return*/, walletResponse(res.data.data)];
             case 5: return [4 /*yield*/, axios.get("".concat(EVMURL, "/getAssets"), headers)];
             case 6:
-                res = (_b.sent());
+                res = _b.sent();
                 return [2 /*return*/, assetResponse(res.data.data)];
             case 7: return [4 /*yield*/, axios.get("".concat(EVMURL, "/getNftAssets"), headers)];
             case 8:
-                res = (_b.sent());
+                res = _b.sent();
                 return [2 /*return*/, nftResponse(res.data.data)];
-            case 9: throw new Error("Invalid Query");
-            case 10: return [3 /*break*/, 12];
-            case 11:
+            case 9: return [4 /*yield*/, axios.get("".concat(EVMURL, "/query/").concat(payload), headers)];
+            case 10:
+                res = _b.sent();
+                return [2 /*return*/, res];
+            case 11: return [3 /*break*/, 13];
+            case 12:
                 error_2 = _b.sent();
                 console.log(error_2);
                 throw new Error(error_2);
-            case 12: return [2 /*return*/];
+            case 13: return [2 /*return*/];
         }
     });
 }); };

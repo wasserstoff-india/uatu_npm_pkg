@@ -1,17 +1,11 @@
 export declare const getWallet: (headers: Object) => Promise<import("axios").AxiosResponse<any, any>>;
-export declare const getQueryResult: (query: string, headers: Object) => Promise<Transaction[] | NFT[] | Asset[] | {
+export declare const getQueryResult: (query: string, headers: Object, payload: string) => Promise<import("axios").AxiosResponse<any, any> | Transaction[] | NFT[] | Asset[] | {
     walletAddress: string;
     assets: Asset[];
     transactions: Transaction[];
     nftAssets: NFT[];
 }>;
-export type Wallet = {
-    walletAddress: string;
-    balances: Array<Asset>;
-    transactions: Array<Transaction>;
-    nftAssets: Array<NFT>;
-};
-export type Transaction = {
+type Transaction = {
     hash: string;
     fromAddress: string;
     toAddress: string;

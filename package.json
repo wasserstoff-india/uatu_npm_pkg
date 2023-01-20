@@ -2,13 +2,13 @@
   "name": "uatu",
   "version": "1.0.0",
   "description": "npm library for UATU API",
-  "main": "./commonJs/src/main.js",
+  "main": "./CommonJS/src/index.js",
   "module": "./ESNext/src/index.js",
   "scripts": {
     "test": "jest --detectOpenHandles --testEnvironment=node --runInBand ./tests",
     "build": "webpack",
-    "commonJs":"tsc --module commonJs",
-    "module":"tsc --module esnext"
+    "commonJs": "tsc --module commonJs",
+    "module": "tsc --module esnext"
   },
   "repository": {
     "type": "git",
@@ -42,7 +42,6 @@
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
   },
-  "type": "module",
   "dependencies": {
     "axios": "^1.2.2",
     "ethers": "^5.7.2"

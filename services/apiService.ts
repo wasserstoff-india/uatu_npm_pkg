@@ -29,24 +29,25 @@ export const getWallet=async(headers:Object)=>{
 //     throw new Error(error)
 //   }
 
-export const getQueryResult=async(query:string,headers:Object)=>{
+export const getQueryResult=async(query:string,headers:Object,payload:string)=>{
   let res;
   try {    
     switch (query) {
       case "transactions":
-        res= (await axios.get(`${EVMURL}/getTransactions`,headers));
+        res= await axios.get(`${EVMURL}/getTransactions`,headers);
         return transactionResponse(res.data.data);
       case "wallet":
-        res= (await axios.get(`${EVMURL}/getWAllet`,headers));        
+        res= await axios.get(`${EVMURL}/getWAllet`,headers);        
         return walletResponse(res.data.data);                
       case "assets":
-        res= (await axios.get(`${EVMURL}/getAssets`,headers));
+        res= await axios.get(`${EVMURL}/getAssets`,headers);
         return assetResponse(res.data.data);  
       case "nfts":
-        res= (await axios.get(`${EVMURL}/getNftAssets`,headers));
+        res= await axios.get(`${EVMURL}/getNftAssets`,headers);
         return nftResponse(res.data.data);
       default:
-        throw new Error("Invalid Query");  
+        res= await axios.get(`${EVMURL}/query/${payload}`,headers);
+        return res;
     }
   } catch (error:any) { 
     console.log(error);
@@ -122,23 +123,15 @@ const walletResponse=(data:Wallet)=>{
     nftAssets:nftResponse(data["nftAssets"])
   }
 }
-// interface AxiosResponseType extends AxiosResponse<InterFaceTypes>{
-//   data:InterFaceTypes
-//   status: number;
-//   statusText: string;
-//   headers: any;
-//   config: any;
-//   request?: any;
-// }
-// type InterFaceTypes= Wallet | Array<Transaction> | Array<Asset> | Array<NFT>;
 
-export type Wallet={
+
+ type Wallet={
     walletAddress:string,
     balances: Array<Asset>,
     transactions: Array<Transaction>,
     nftAssets: Array<NFT>
 }
-export type Transaction={
+ type Transaction={
     hash:string,
     fromAddress: string,
     toAddress: string,

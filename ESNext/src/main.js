@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { getQueryResult, getWallet } from "../services/apiService";
+import { indexOfQueryArray, queryArray, routeArray } from "./constant";
 var UATU = /** @class */ (function () {
     function UATU(wallet, apiKey) {
         this.wallet = wallet;
@@ -110,19 +111,23 @@ var UATU = /** @class */ (function () {
             });
         });
     };
-    UATU.prototype.ask = function (query) {
+    UATU.prototype.ask = function (que) {
         return __awaiter(this, void 0, void 0, function () {
-            var headers, error_2;
+            var query, headers, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         if (this.address.length <= 0 || this.apiKey.length <= 0 || !this.wallet)
                             throw new Error("Call Uatu verify first  By passing wallet and apiKey");
+                        query = que;
+                        if (que !== "wallet" && que !== "transactions" && que !== "assets" && que !== "nfts") {
+                            query = this.filterQuery(que);
+                        }
                         return [4 /*yield*/, this.getHeaders(query)];
                     case 1:
                         headers = _a.sent();
-                        return [4 /*yield*/, getQueryResult(query, headers)];
+                        return [4 /*yield*/, getQueryResult(query, headers, que)];
                     case 2: return [2 /*return*/, _a.sent()];
                     case 3:
                         error_2 = _a.sent();
@@ -132,76 +137,26 @@ var UATU = /** @class */ (function () {
             });
         });
     };
+    UATU.prototype.filterQuery = function (input) {
+        var _a;
+        var match = [];
+        var j = 0;
+        input = input.toLowerCase();
+        for (var i = 0; i < queryArray.length; i++) {
+            if (input.includes(queryArray[i])) {
+                if (match[0] == routeArray[j])
+                    continue;
+                if (match[0] != routeArray[j] && match.length < 1)
+                    match.push(routeArray[j]);
+                else
+                    return "query";
+            }
+            if (indexOfQueryArray[j] == i)
+                j++;
+        }
+        return (_a = match[0]) !== null && _a !== void 0 ? _a : "query";
+    };
     return UATU;
 }());
 export { UATU };
-// async ask<T extends "wallet" | "transactions" | "assets" | "nfts">(query :T):T extends "wallet" ? WalletObject : (T extends "transactions" ? Array<Transaction> :(T extends "assets" ? Array<Asset> : Array<NFT>)){
-//   try {
-//         if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first  By passing wallet and apiKey");
-//         const headers=await this.getHeaders(query);
-//         return await getQueryResult(query,headers);      
-//       } catch (error:any) {         
-//         return error["response"];      
-//       }
-// }
-// interface AxiosResponseType extends AxiosResponse<InterFaceTypes>{
-//   data:InterFaceTypes
-//   status: number;
-//   statusText: string;
-//   headers: any;
-//   config: any;
-//   request?: any;
-// }
-// type InterFaceTypes= {
-//   status:boolean,
-//   message:string,
-//   data1:WalletObject | Array<Transaction> | Array<Asset> | Array<NFT>;
-// }
-// type WalletObject={
-//     "walletAddress":string,
-//     "assets": Array<Asset>,
-//     "transactions": Array<Transaction>,
-//     "nftAssets": Array<NFT>
-// }
-// type Transaction={
-//     "hash":string,
-//     "fromAddress": string,
-//     "toAddress": string,
-//     "value": number,
-//     gas:string,
-//     gasPrice:number,
-//     "txnType": string,
-//     "chainId": number,
-//     "coin": CoinSymbol,
-//     "blockNumber": number,
-//     "txnStatus": boolean,
-//     "txnTime": number
-// }
-// type NFT={
-//     "token_address": string,
-//     "token_id": string,
-//     "owner_of": string,
-//     "block_number": number,
-//     "block_number_minted": number,
-//     "token_hash": string,
-//     "amount": number,
-//     "contract_type": string,
-//     "name": string,
-//     "symbol": string,
-//     "token_uri": null,
-//     "minter_address": string,
-//     "chainId": number,
-//     "timestamp": number
-// }
-// type Asset={
-//     "value": number,
-//     "symbol": CoinSymbol,
-//     "chain": ChainName,
-// }
-// type CoinSymbol={
-//   symbol:string
-// }
-// type ChainName={
-//   chain:string
-// }
 //# sourceMappingURL=main.js.map
