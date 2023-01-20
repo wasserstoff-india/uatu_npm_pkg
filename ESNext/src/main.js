@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,9 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.UATU = void 0;
-var apiService_1 = require("../services/apiService");
+import { getQueryResult, getWallet } from "../services/apiService";
 var UATU = /** @class */ (function () {
     function UATU(wallet, apiKey) {
         this.wallet = wallet;
@@ -102,7 +99,7 @@ var UATU = /** @class */ (function () {
                         return [4 /*yield*/, this.getHeaders("wallet")];
                     case 1:
                         headers = _a.sent();
-                        return [4 /*yield*/, (0, apiService_1.getWallet)(headers)];
+                        return [4 /*yield*/, getWallet(headers)];
                     case 2: return [2 /*return*/, _a.sent()];
                     case 3:
                         error_1 = _a.sent();
@@ -125,7 +122,7 @@ var UATU = /** @class */ (function () {
                         return [4 /*yield*/, this.getHeaders(query)];
                     case 1:
                         headers = _a.sent();
-                        return [4 /*yield*/, (0, apiService_1.getQueryResult)(query, headers)];
+                        return [4 /*yield*/, getQueryResult(query, headers)];
                     case 2: return [2 /*return*/, _a.sent()];
                     case 3:
                         error_2 = _a.sent();
@@ -137,7 +134,7 @@ var UATU = /** @class */ (function () {
     };
     return UATU;
 }());
-exports.UATU = UATU;
+export { UATU };
 // async ask<T extends "wallet" | "transactions" | "assets" | "nfts">(query :T):T extends "wallet" ? WalletObject : (T extends "transactions" ? Array<Transaction> :(T extends "assets" ? Array<Asset> : Array<NFT>)){
 //   try {
 //         if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first  By passing wallet and apiKey");

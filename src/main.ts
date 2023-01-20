@@ -1,6 +1,5 @@
 import { getQueryResult, getWallet } from "../services/apiService";
 import {Wallet} from "ethers";
-import { AxiosResponse } from "axios";
 export class UATU {
   private address:string = '';
   // private version:string="1.0.1";
@@ -49,18 +48,15 @@ export class UATU {
     }
   }
   
-  async ask(query:string) {
-    try {
-      console.log(query);      
+  async ask<T extends "wallet" | "transactions" | "assets" | "nfts">(query:T) {
+    try {      
       if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first  By passing wallet and apiKey");
       const headers=await this.getHeaders(query);
-      const res:InterFaceTypes= await getQueryResult(query,headers);   
-      return res;   
+      return await getQueryResult(query,headers);   
     } catch (error:any) {         
       return error["response"];      
     }
   }
-
   
 }
 
@@ -83,63 +79,63 @@ export class UATU {
 // }
 
 
-type InterFaceTypes= {
-  status:boolean,
-  message:string,
-  data:WalletObject | Array<Transaction> | Array<Asset> | Array<NFT>;
-}
-type WalletObject={
-    "walletAddress":string,
-    "assets": Array<Asset>,
-    "transactions": Array<Transaction>,
-    "nftAssets": Array<NFT>
-}
-type Transaction={
-    "hash":string,
-    "fromAddress": string,
-    "toAddress": string,
-    "value": number,
-    gas:string,
-    gasPrice:number,
-    "txnType": string,
-    "chainId": number,
-    "coin": CoinSymbol,
-    "blockNumber": number,
-    "txnStatus": boolean,
-    "txnTime": number
-}
+// type InterFaceTypes= {
+//   status:boolean,
+//   message:string,
+//   data1:WalletObject | Array<Transaction> | Array<Asset> | Array<NFT>;
+// }
+// type WalletObject={
+//     "walletAddress":string,
+//     "assets": Array<Asset>,
+//     "transactions": Array<Transaction>,
+//     "nftAssets": Array<NFT>
+// }
+// type Transaction={
+//     "hash":string,
+//     "fromAddress": string,
+//     "toAddress": string,
+//     "value": number,
+//     gas:string,
+//     gasPrice:number,
+//     "txnType": string,
+//     "chainId": number,
+//     "coin": CoinSymbol,
+//     "blockNumber": number,
+//     "txnStatus": boolean,
+//     "txnTime": number
+// }
 
-type NFT={
-    "token_address": string,
-    "token_id": string,
-    "owner_of": string,
-    "block_number": number,
-    "block_number_minted": number,
-    "token_hash": string,
-    "amount": number,
-    "contract_type": string,
-    "name": string,
-    "symbol": string,
-    "token_uri": null,
-    "minter_address": string,
-    "chainId": number,
-    "timestamp": number
+// type NFT={
+//     "token_address": string,
+//     "token_id": string,
+//     "owner_of": string,
+//     "block_number": number,
+//     "block_number_minted": number,
+//     "token_hash": string,
+//     "amount": number,
+//     "contract_type": string,
+//     "name": string,
+//     "symbol": string,
+//     "token_uri": null,
+//     "minter_address": string,
+//     "chainId": number,
+//     "timestamp": number
   
-}
+// }
 
-type Asset={
-    "value": number,
-    "symbol": CoinSymbol,
-    "chain": ChainName,
-}
+// type Asset={
+//     "value": number,
+//     "symbol": CoinSymbol,
+//     "chain": ChainName,
+// }
 
-type CoinSymbol={
-  symbol:string
-}
+// type CoinSymbol={
+//   symbol:string
+// }
 
-type ChainName={
-  chain:string
-}
+// type ChainName={
+//   chain:string
+// }
 
 
 

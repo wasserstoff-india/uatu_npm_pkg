@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,20 +34,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getQueryResult = exports.getWallet = void 0;
 var EVMURL = "http://localhost:8002";
-var axios_1 = __importDefault(require("axios"));
-var getWallet = function (headers) { return __awaiter(void 0, void 0, void 0, function () {
+import axios from "axios";
+export var getWallet = function (headers) { return __awaiter(void 0, void 0, void 0, function () {
     var error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, axios_1.default.get("".concat(EVMURL, "/watch-me"), headers)];
+                return [4 /*yield*/, axios.get("".concat(EVMURL, "/watch-me"), headers)];
             case 1: return [2 /*return*/, _a.sent()];
             case 2:
                 error_1 = _a.sent();
@@ -57,7 +51,6 @@ var getWallet = function (headers) { return __awaiter(void 0, void 0, void 0, fu
         }
     });
 }); };
-exports.getWallet = getWallet;
 // export const getQueryResult=async(query:string,headers:Object)=>{
 //   try {    
 //     switch (query) {
@@ -75,7 +68,7 @@ exports.getWallet = getWallet;
 //   } catch (error:any) { 
 //     throw new Error(error)
 //   }
-var getQueryResult = function (query, headers) { return __awaiter(void 0, void 0, void 0, function () {
+export var getQueryResult = function (query, headers) { return __awaiter(void 0, void 0, void 0, function () {
     var res, _a, error_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -89,19 +82,19 @@ var getQueryResult = function (query, headers) { return __awaiter(void 0, void 0
                     case "nfts": return [3 /*break*/, 7];
                 }
                 return [3 /*break*/, 9];
-            case 1: return [4 /*yield*/, axios_1.default.get("".concat(EVMURL, "/getTransactions"), headers)];
+            case 1: return [4 /*yield*/, axios.get("".concat(EVMURL, "/getTransactions"), headers)];
             case 2:
                 res = (_b.sent());
                 return [2 /*return*/, transactionResponse(res.data.data)];
-            case 3: return [4 /*yield*/, axios_1.default.get("".concat(EVMURL, "/getWAllet"), headers)];
+            case 3: return [4 /*yield*/, axios.get("".concat(EVMURL, "/getWAllet"), headers)];
             case 4:
                 res = (_b.sent());
                 return [2 /*return*/, walletResponse(res.data.data)];
-            case 5: return [4 /*yield*/, axios_1.default.get("".concat(EVMURL, "/getAssets"), headers)];
+            case 5: return [4 /*yield*/, axios.get("".concat(EVMURL, "/getAssets"), headers)];
             case 6:
                 res = (_b.sent());
                 return [2 /*return*/, assetResponse(res.data.data)];
-            case 7: return [4 /*yield*/, axios_1.default.get("".concat(EVMURL, "/getNftAssets"), headers)];
+            case 7: return [4 /*yield*/, axios.get("".concat(EVMURL, "/getNftAssets"), headers)];
             case 8:
                 res = (_b.sent());
                 return [2 /*return*/, nftResponse(res.data.data)];
@@ -115,7 +108,6 @@ var getQueryResult = function (query, headers) { return __awaiter(void 0, void 0
         }
     });
 }); };
-exports.getQueryResult = getQueryResult;
 var transactionResponse = function (data) {
     var response = [];
     for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {

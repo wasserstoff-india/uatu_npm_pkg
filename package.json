@@ -2,11 +2,13 @@
   "name": "uatu",
   "version": "1.0.0",
   "description": "npm library for UATU API",
-  "module": "./commonJs/src/index.js",
-  "main": "./ESNext/src/index.js",
+  "main": "./commonJs/src/main.js",
+  "module": "./ESNext/src/index.js",
   "scripts": {
     "test": "jest --detectOpenHandles --testEnvironment=node --runInBand ./tests",
-    "build": "webpack"
+    "build": "webpack",
+    "commonJs":"tsc --module commonJs",
+    "module":"tsc --module esnext"
   },
   "repository": {
     "type": "git",
