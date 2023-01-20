@@ -26,19 +26,22 @@ describe("Npm Test",()=>{
     
   });
   // test("get nft success",async()=>{
-  //   let response=await ua.ask("nft")
+  //   let response=await ua.ask("nfts)
   //   expect(response.status).toBe(200);
     
   // });
   // test("get asset success",async()=>{
-  //   let response=await ua.ask("asset")
+  //   let response=await ua.ask("assets")
   //   expect(response.status).toBe(200);
     
   // });
-  // test("get transaction success",async()=>{
-  //   let response=await ua.ask("transaction")
-  //   expect(response.status).toBe(200);    
-  // });
+  test("get transaction success",async()=>{
+    wallet=new ethers.Wallet(privateKey);
+    ua=new UATU();
+    ua=await ua.verify(wallet,apiKey);
+    let response=await ua.ask("transactions")
+    expect(response).not.toBe(null);    
+  });
 
   // test("get wallet Fail as wrong address that does not exist in db is being passed",async()=>{
   //   const options={
