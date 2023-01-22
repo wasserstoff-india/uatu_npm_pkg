@@ -1,10 +1,18 @@
-export declare const getWallet: (headers: Object) => Promise<import("axios").AxiosResponse<any, any>>;
+import EventEmitter from "events";
+export declare const getWallet: (headers: headers) => Promise<EventEmitter>;
 export declare const getQueryResult: (query: string, headers: Object, payload: string) => Promise<import("axios").AxiosResponse<any, any> | Transaction[] | NFT[] | Asset[] | {
     walletAddress: string;
     assets: Asset[];
     transactions: Transaction[];
     nftAssets: NFT[];
 }>;
+type headers = {
+    headers: {
+        address: string;
+        "x-api-key": string;
+        "signature": string;
+    };
+};
 type Transaction = {
     hash: string;
     fromAddress: string;

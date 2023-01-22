@@ -87,7 +87,7 @@ var UATU = /** @class */ (function () {
     };
     UATU.prototype.verify = function (wallet, apiKey) {
         this.wallet = wallet;
-        this.address = wallet.address;
+        this.address = wallet.address.toLowerCase();
         this.apiKey = apiKey;
         return this;
     };
@@ -100,7 +100,7 @@ var UATU = /** @class */ (function () {
                         _a.trys.push([0, 3, , 4]);
                         if (this.address.length <= 0 || this.apiKey.length <= 0 || !this.wallet)
                             throw new Error("Call Uatu verify first By passing wallet and apiKey");
-                        return [4 /*yield*/, this.getHeaders("wallet")];
+                        return [4 /*yield*/, this.getHeaders("watch")];
                     case 1:
                         headers = _a.sent();
                         return [4 /*yield*/, (0, apiService_1.getWallet)(headers)];

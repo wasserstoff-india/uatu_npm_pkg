@@ -41,15 +41,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getQueryResult = exports.getWallet = void 0;
 var EVMURL = "http://localhost:8002";
+var events_1 = __importDefault(require("events"));
 var axios_1 = __importDefault(require("axios"));
+var ws_1 = __importDefault(require("ws"));
 var getWallet = function (headers) { return __awaiter(void 0, void 0, void 0, function () {
-    var error_1;
+    var ws_2, ee, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
                 return [4 /*yield*/, axios_1.default.get("".concat(EVMURL, "/watch-me"), headers)];
-            case 1: return [2 /*return*/, _a.sent()];
+            case 1:
+                _a.sent();
+                ws_2 = new ws_1.default("ws://localhost:8002/watch-me/".concat(headers["headers"]["address"]));
+                ee = new events_1.default();
+                ws_2.on("open", function () {
+                    ws_2.on("message", function (data) {
+                        var res = JSON.parse(data);
+                        console.log(res.query);
+                        ee.emit('message', res);
+                    });
+                });
+                return [2 /*return*/, ee];
             case 2:
                 error_1 = _a.sent();
                 throw new Error(error_1);
@@ -58,23 +71,6 @@ var getWallet = function (headers) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.getWallet = getWallet;
-// export const getQueryResult=async(query:string,headers:Object)=>{
-//   try {    
-//     switch (query) {
-//       case "transactions":
-//         return await axios.get(`${EVMURL}/getTransactions`,headers); 
-//       case "wallet":
-//         return await axios.get(`${EVMURL}/getWAllet`,headers);
-//       case "assets":
-//         return await axios.get(`${EVMURL}/getAssets`,headers); 
-//       case "nfts":
-//         return await axios.get(`${EVMURL}/getNftAssets`,headers);
-//       default:
-//         throw new Error("Invalid Query");  
-//     }
-//   } catch (error:any) { 
-//     throw new Error(error)
-//   }
 var getQueryResult = function (query, headers, payload) { return __awaiter(void 0, void 0, void 0, function () {
     var res, _a, error_2;
     return __generator(this, function (_b) {

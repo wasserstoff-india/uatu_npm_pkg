@@ -33,7 +33,7 @@ export class UATU {
 
   verify(wallet:Wallet,apiKey:string) {
     this.wallet=wallet;
-    this.address = wallet.address;
+    this.address = wallet.address.toLowerCase();
     this.apiKey=apiKey;
     return this;
   }
@@ -41,7 +41,7 @@ export class UATU {
   async watch() {
     try {
       if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first By passing wallet and apiKey");
-      const headers=await this.getHeaders("wallet");
+      const headers=await this.getHeaders("watch");
       return await getWallet(headers);      
     } catch (error:any) {   
       console.log(error);

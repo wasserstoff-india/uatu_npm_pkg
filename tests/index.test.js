@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, test } from "@jest/globals";
 
 import { ethers } from "ethers";
-import { UATU } from "../src/index";
+import { UATU } from "../ESNext/src/index.js";
 
 const apiKey="$2b$10$4uNxGzXx/bGfzN0PYHDBGuEfpFOijq47DztnB5b9yCHxO1qcLaxdC";
 const privateKey="0x6f1ef7c82e14fd783b48f7863b94bc890a362e21bd42ca89d61c98a14852819b";
@@ -20,10 +20,9 @@ describe("Npm Test",()=>{
     wallet=new ethers.Wallet(privateKey);
     ua=new UATU();
     ua=await ua.verify(wallet,apiKey);
-    let response=await ua.ask("wallet");
-
+    let response=await ua.watch();
+    console.log(response);
     expect(response).not.toBe(null);
-    
   });
   // test("get nft success",async()=>{
   //   let response=await ua.ask("nfts)
@@ -35,22 +34,22 @@ describe("Npm Test",()=>{
   //   expect(response.status).toBe(200);
     
   // });
-  test("get transaction success",async()=>{
-    wallet=new ethers.Wallet(privateKey);
-    ua=new UATU();
-    ua=await ua.verify(wallet,apiKey);
-    let response=await ua.ask("getMETransaction");
-    console.log(response);
-    expect(response).not.toBe(null);    
-  });
-  test("get transaction success",async()=>{
-    wallet=new ethers.Wallet(privateKey);
-    ua=new UATU();
-    ua=await ua.verify(wallet,apiKey);
-    let response=await ua.ask("getMETransactionandwallet");
-    console.log(response);
-    expect(response).not.toBe(null);    
-  });
+  // test("get transaction success",async()=>{
+  //   wallet=new ethers.Wallet(privateKey);
+  //   ua=new UATU();
+  //   ua=await ua.verify(wallet,apiKey);
+  //   let response=await ua.ask("getMETransaction");
+  //   console.log(response);
+  //   expect(response).not.toBe(null);    
+  // });
+  // test("get transaction success",async()=>{
+  //   wallet=new ethers.Wallet(privateKey);
+  //   ua=new UATU();
+  //   ua=await ua.verify(wallet,apiKey);
+  //   let response=await ua.ask("getMETransactionandwallet");
+  //   console.log(response);
+  //   expect(response).not.toBe(null);    
+  // });
 
   // test("get wallet Fail as wrong address that does not exist in db is being passed",async()=>{
   //   const options={

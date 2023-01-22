@@ -1,33 +1,40 @@
 const EVMURL="http://localhost:8002";
+import EventEmitter from "events";
 import axios from "axios";
+import WebSocket from "ws";
 
-export const getWallet=async(headers:Object)=>{ 
+export const getWallet=async(headers:headers)=>{ 
   try {
-    return await axios.get(`${EVMURL}/watch-me`,headers);    
+    await axios.get(`${EVMURL}/watch-me`,headers);
+    const ws=new WebSocket(`ws://localhost:8002/watch-me/${headers["headers"]["address"]}`);
+    var ee = new EventEmitter()
+    ws.on("open",()=>{
+      ws.on("message",(data:string)=>{
+        let res=JSON.parse(data);
+        switch(res.query){
+          case "asset":
+            ee.emit('asset', res.data);
+            break;
+          case "transaction":
+            ee.emit("transaction",res.data);
+            break;
+          case "nft":
+            ee.emit("nft",res.data);
+            break;
+          case "wallet":
+            ee.emit("wallet",res.data);
+            break;
+          default:
+            ee.emit("message",res)
+        }
+      })
+    })
+    return ee;
   } catch (error:any) {
     throw new Error(error)    
   }
   
 }
-
-
-// export const getQueryResult=async(query:string,headers:Object)=>{
-//   try {    
-//     switch (query) {
-//       case "transactions":
-//         return await axios.get(`${EVMURL}/getTransactions`,headers); 
-//       case "wallet":
-//         return await axios.get(`${EVMURL}/getWAllet`,headers);
-//       case "assets":
-//         return await axios.get(`${EVMURL}/getAssets`,headers); 
-//       case "nfts":
-//         return await axios.get(`${EVMURL}/getNftAssets`,headers);
-//       default:
-//         throw new Error("Invalid Query");  
-//     }
-//   } catch (error:any) { 
-//     throw new Error(error)
-//   }
 
 export const getQueryResult=async(query:string,headers:Object,payload:string)=>{
   let res;
@@ -124,7 +131,13 @@ const walletResponse=(data:Wallet)=>{
   }
 }
 
-
+type headers={
+  headers:{
+    address:string,
+    "x-api-key":string,
+    "signature":string
+  }
+}
  type Wallet={
     walletAddress:string,
     balances: Array<Asset>,
