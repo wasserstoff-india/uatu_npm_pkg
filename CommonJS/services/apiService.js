@@ -39,8 +39,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getQueryResult = exports.getWallet = void 0;
+exports.getQueryResult = exports.askPriceApi = exports.watchPrice = exports.getWallet = void 0;
 var EVMURL = "http://localhost:8002";
+var priceTickerUrl = "http://localhost:8006";
 var events_1 = __importDefault(require("events"));
 var axios_1 = __importDefault(require("axios"));
 var ws_1 = __importDefault(require("ws"));
@@ -58,8 +59,22 @@ var getWallet = function (headers) { return __awaiter(void 0, void 0, void 0, fu
                 ws_2.on("open", function () {
                     ws_2.on("message", function (data) {
                         var res = JSON.parse(data);
-                        console.log(res.query);
-                        ee.emit('message', res);
+                        switch (res.query) {
+                            case "asset":
+                                ee.emit('asset', res.data);
+                                break;
+                            case "transaction":
+                                ee.emit("transaction", res.data);
+                                break;
+                            case "nft":
+                                ee.emit("nft", res.data);
+                                break;
+                            case "wallet":
+                                ee.emit("wallet", res.data);
+                                break;
+                            default:
+                                ee.emit("message", res);
+                        }
                     });
                 });
                 return [2 /*return*/, ee];
@@ -71,8 +86,45 @@ var getWallet = function (headers) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.getWallet = getWallet;
+var watchPrice = function (headers, query) { return __awaiter(void 0, void 0, void 0, function () {
+    var ws_3, ee;
+    return __generator(this, function (_a) {
+        try {
+            ws_3 = new ws_1.default("ws://localhost:8006/price?symbol=".concat(query));
+            ee = new events_1.default();
+            ws_3.on("open", function () {
+                ws_3.on("message", function (data) {
+                    var res = JSON.parse(data);
+                    ee.emit("ticker", res);
+                });
+            });
+            return [2 /*return*/, ee];
+        }
+        catch (error) {
+            throw new Error(error);
+        }
+        return [2 /*return*/];
+    });
+}); };
+exports.watchPrice = watchPrice;
+var askPriceApi = function (headers, query) { return __awaiter(void 0, void 0, void 0, function () {
+    var error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, axios_1.default.get("".concat(priceTickerUrl, "/price?symbol=").concat(query), headers)];
+            case 1: return [2 /*return*/, _a.sent()];
+            case 2:
+                error_2 = _a.sent();
+                throw new Error(error_2);
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.askPriceApi = askPriceApi;
 var getQueryResult = function (query, headers, payload) { return __awaiter(void 0, void 0, void 0, function () {
-    var res, _a, error_2;
+    var res, _a, error_3;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -107,9 +159,9 @@ var getQueryResult = function (query, headers, payload) { return __awaiter(void 
                 return [2 /*return*/, res];
             case 11: return [3 /*break*/, 13];
             case 12:
-                error_2 = _b.sent();
-                console.log(error_2);
-                throw new Error(error_2);
+                error_3 = _b.sent();
+                console.log(error_3);
+                throw new Error(error_3);
             case 13: return [2 /*return*/];
         }
     });

@@ -8,7 +8,10 @@ export declare class UATU {
     private getHeaders;
     verify(wallet: Wallet, apiKey: string): this;
     watch(): Promise<any>;
+    watchPrice(query?: Array<string>): Promise<any>;
+    askPrice(query?: Array<string>): Promise<any>;
     ask(que: string): Promise<any>;
+    private makeQueryString;
     private filterQuery;
 }
 //# sourceMappingURL=main.d.ts.map

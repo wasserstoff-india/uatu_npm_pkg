@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, test } from "@jest/globals";
 
-import { ethers } from "ethers";
 import { UATU } from "../ESNext/src/index.js";
+import { ethers } from "ethers";
 
 const apiKey="$2b$10$4uNxGzXx/bGfzN0PYHDBGuEfpFOijq47DztnB5b9yCHxO1qcLaxdC";
 const privateKey="0x6f1ef7c82e14fd783b48f7863b94bc890a362e21bd42ca89d61c98a14852819b";

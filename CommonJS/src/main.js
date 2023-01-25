@@ -114,9 +114,57 @@ var UATU = /** @class */ (function () {
             });
         });
     };
+    UATU.prototype.watchPrice = function (query) {
+        return __awaiter(this, void 0, void 0, function () {
+            var headers, queryParam, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        if (this.address.length <= 0 || this.apiKey.length <= 0 || !this.wallet)
+                            throw new Error("Call Uatu verify first By passing wallet and apiKey");
+                        return [4 /*yield*/, this.getHeaders("watchPrice")];
+                    case 1:
+                        headers = _a.sent();
+                        queryParam = this.makeQueryString(query);
+                        return [4 /*yield*/, (0, apiService_1.watchPrice)(headers, queryParam)];
+                    case 2: return [2 /*return*/, _a.sent()];
+                    case 3:
+                        error_2 = _a.sent();
+                        console.log(error_2);
+                        return [2 /*return*/, error_2["response"]];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UATU.prototype.askPrice = function (query) {
+        return __awaiter(this, void 0, void 0, function () {
+            var headers, queryParam, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        if (this.address.length <= 0 || this.apiKey.length <= 0 || !this.wallet)
+                            throw new Error("Call Uatu verify first By passing wallet and apiKey");
+                        return [4 /*yield*/, this.getHeaders("askPrice")];
+                    case 1:
+                        headers = _a.sent();
+                        queryParam = this.makeQueryString(query);
+                        return [4 /*yield*/, (0, apiService_1.askPriceApi)(headers, queryParam)];
+                    case 2: return [2 /*return*/, _a.sent()];
+                    case 3:
+                        error_3 = _a.sent();
+                        console.log(error_3);
+                        return [2 /*return*/, error_3["response"]];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
     UATU.prototype.ask = function (que) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, headers, error_2;
+            var query, headers, error_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -133,12 +181,25 @@ var UATU = /** @class */ (function () {
                         return [4 /*yield*/, (0, apiService_1.getQueryResult)(query, headers, que)];
                     case 2: return [2 /*return*/, _a.sent()];
                     case 3:
-                        error_2 = _a.sent();
-                        return [2 /*return*/, error_2["response"]];
+                        error_4 = _a.sent();
+                        return [2 /*return*/, error_4["response"]];
                     case 4: return [2 /*return*/];
                 }
             });
         });
+    };
+    UATU.prototype.makeQueryString = function (query) {
+        if (!query || query.length == 0)
+            return "ALL";
+        var res = "";
+        for (var _i = 0, query_1 = query; _i < query_1.length; _i++) {
+            var coin = query_1[_i];
+            if (coin.toUpperCase() == "ALL") {
+                return "ALL";
+            }
+            res += coin.toUpperCase();
+        }
+        return res;
     };
     UATU.prototype.filterQuery = function (input) {
         var _a;

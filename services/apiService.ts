@@ -1,4 +1,5 @@
 const EVMURL="http://localhost:8002";
+const priceTickerUrl="http://localhost:8006"
 import EventEmitter from "events";
 import axios from "axios";
 import WebSocket from "ws";
@@ -36,6 +37,29 @@ export const getWallet=async(headers:headers)=>{
   
 }
 
+export const watchPrice=async(headers:headers,query?:string)=>{
+  try {
+    const ws=new WebSocket(`ws://localhost:8006/price?symbol=${query}`);
+    var ee = new EventEmitter()
+    ws.on("open",()=>{
+      ws.on("message",(data:string)=>{
+        let res=JSON.parse(data);
+        ee.emit("ticker",res);
+      })
+    });
+    return ee;
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export const askPriceApi=async(headers:headers,query?:string)=>{
+  try {
+    return await axios.get(`${priceTickerUrl}/price?symbol=${query}`,headers);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
 export const getQueryResult=async(query:string,headers:Object,payload:string)=>{
   let res;
   try {    

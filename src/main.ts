@@ -1,4 +1,4 @@
-import { getQueryResult, getWallet } from "../services/apiService";
+import { askPriceApi, getQueryResult, getWallet, watchPrice } from "../services/apiService";
 import {Wallet} from "ethers";
 import { indexOfQueryArray,queryArray,routeArray } from "./constant";
 
@@ -44,12 +44,33 @@ export class UATU {
       const headers=await this.getHeaders("watch");
       return await getWallet(headers);      
     } catch (error:any) {   
-      console.log(error);
-        
+      console.log(error);        
       return error["response"];
     }
   }
   
+  async watchPrice(query?:Array<string>){
+    try {
+      if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first By passing wallet and apiKey");
+      const headers=await this.getHeaders("watchPrice");
+      let queryParam:string=this.makeQueryString(query);
+      return await watchPrice(headers,queryParam);      
+    } catch (error:any) {   
+      console.log(error);        
+      return error["response"];
+    }
+  }
+  async askPrice(query?:Array<string>){
+    try {
+      if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first By passing wallet and apiKey");
+      const headers=await this.getHeaders("askPrice");
+      let queryParam:string=this.makeQueryString(query);
+      return await askPriceApi(headers,queryParam);      
+    } catch (error:any) {   
+      console.log(error);        
+      return error["response"];
+    }
+  }
   async ask(que:string) {
     try {      
       if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first  By passing wallet and apiKey");
@@ -62,6 +83,18 @@ export class UATU {
     } catch (error:any) {         
       return error["response"];      
     }
+  }
+
+  private makeQueryString(query:Array<string>){
+    if(!query || query.length==0)return "ALL";
+    let res="";
+    for(let coin of query){
+      if(coin.toUpperCase()=="ALL"){
+        return "ALL";
+      }
+      res+=coin.toUpperCase();
+    }
+    return res;
   }
 
   private filterQuery(input:string){

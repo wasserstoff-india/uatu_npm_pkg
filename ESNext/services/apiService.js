@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var EVMURL = "http://localhost:8002";
+var priceTickerUrl = "http://localhost:8006";
 import EventEmitter from "events";
 import axios from "axios";
 import WebSocket from "ws";
@@ -52,8 +53,22 @@ export var getWallet = function (headers) { return __awaiter(void 0, void 0, voi
                 ws_1.on("open", function () {
                     ws_1.on("message", function (data) {
                         var res = JSON.parse(data);
-                        console.log(res.query);
-                        ee.emit('message', res);
+                        switch (res.query) {
+                            case "asset":
+                                ee.emit('asset', res.data);
+                                break;
+                            case "transaction":
+                                ee.emit("transaction", res.data);
+                                break;
+                            case "nft":
+                                ee.emit("nft", res.data);
+                                break;
+                            case "wallet":
+                                ee.emit("wallet", res.data);
+                                break;
+                            default:
+                                ee.emit("message", res);
+                        }
                     });
                 });
                 return [2 /*return*/, ee];
@@ -64,8 +79,43 @@ export var getWallet = function (headers) { return __awaiter(void 0, void 0, voi
         }
     });
 }); };
+export var watchPrice = function (headers, query) { return __awaiter(void 0, void 0, void 0, function () {
+    var ws_2, ee;
+    return __generator(this, function (_a) {
+        try {
+            ws_2 = new WebSocket("ws://localhost:8006/price?symbol=".concat(query));
+            ee = new EventEmitter();
+            ws_2.on("open", function () {
+                ws_2.on("message", function (data) {
+                    var res = JSON.parse(data);
+                    ee.emit("ticker", res);
+                });
+            });
+            return [2 /*return*/, ee];
+        }
+        catch (error) {
+            throw new Error(error);
+        }
+        return [2 /*return*/];
+    });
+}); };
+export var askPriceApi = function (headers, query) { return __awaiter(void 0, void 0, void 0, function () {
+    var error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, axios.get("".concat(priceTickerUrl, "/price?symbol=").concat(query), headers)];
+            case 1: return [2 /*return*/, _a.sent()];
+            case 2:
+                error_2 = _a.sent();
+                throw new Error(error_2);
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
 export var getQueryResult = function (query, headers, payload) { return __awaiter(void 0, void 0, void 0, function () {
-    var res, _a, error_2;
+    var res, _a, error_3;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -100,9 +150,9 @@ export var getQueryResult = function (query, headers, payload) { return __awaite
                 return [2 /*return*/, res];
             case 11: return [3 /*break*/, 13];
             case 12:
-                error_2 = _b.sent();
-                console.log(error_2);
-                throw new Error(error_2);
+                error_3 = _b.sent();
+                console.log(error_3);
+                throw new Error(error_3);
             case 13: return [2 /*return*/];
         }
     });
