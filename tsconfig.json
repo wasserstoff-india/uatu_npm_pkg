@@ -10,7 +10,7 @@
       "es5",
       "dom"
     ],
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
@@ -21,8 +21,8 @@
     "preserveWatchOutput": true,
     "pretty": false,
     "sourceMap": true,
-    "target": "es5",
-    "outDir": "./ESNext"
+    "target": "ES5",
+    "outDir": "./CommonJS"
   },
   "exclude": ["node_modules", "**/__tests__/*"],
 }
