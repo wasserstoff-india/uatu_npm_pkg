@@ -3,7 +3,7 @@
 
 ## Introduction
 
-This is a JavaScript library for UATU. It is a wrapper for the UATU API. It is written in TypeScript and can be used in both Node.js and the browser. It is also available as a [npm package](https://www.npmjs.com/package/uatu-js).
+This is a JavaScript library for UATU. It is a wrapper for the UATU API. It is written in TypeScript and can be used in both Node.js and the browser. It is also available as a [npm package](https://www.npmjs.com/package/uatujs).
 
 
 ## Installation
@@ -11,20 +11,20 @@ This is a JavaScript library for UATU. It is a wrapper for the UATU API. It is w
 ### Node.js
 
 ```bash
-npm install uatu-js
+npm install uatujs
 ```
 
 ### Browser
 
 ```html
-<script src="https://unpkg.com/uatu-js"></script>
+<script src="https://unpkg.com/uatujs@1.0.3/CommonJS/src/index.js"></script>
 ```
 
 
 ## Usage
 
 ```js
-const { UATU } = require('uatu-js');
+const { UATU } = require('uatujs');
 const { ethers } = require('ethers');
 
 const wallet = new ethers.Wallet('0x...');
