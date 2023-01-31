@@ -34,8 +34,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { askPriceApi, getQueryResult, getWallet, watchPrice } from "../services/apiService";
-import { indexOfQueryArray, queryArray, routeArray } from "./constant";
+import { askPriceApi, getQueryResult, getWallet, watchPrice } from "./services/apiService";
+import { indexOfQueryArray, queryArray, routeArray } from "./constants/constant";
 var UATU = /** @class */ (function () {
     function UATU(wallet, apiKey) {
         this.wallet = wallet;

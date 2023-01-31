@@ -8,48 +8,34 @@ const privateKey="0x6f1ef7c82e14fd783b48f7863b94bc890a362e21bd42ca89d61c98a14852
 
 let wallet,ua;
 
-// beforeAll(async()=>{
-//   wallet=new ethers.Wallet(privateKey);
-//   ua=new UATU();
-//   ua=await ua.verify(wallet,apiKey);
-  
-// })
+beforeAll(async()=>{
+  wallet=new ethers.Wallet(privateKey);
+  ua=new UATU();
+  ua=await ua.verify(wallet,apiKey);
+})
 
 describe("Npm Test",()=>{
   test("get wallet success",async()=>{
-    wallet=new ethers.Wallet(privateKey);
-    ua=new UATU();
-    ua=await ua.verify(wallet,apiKey);
     let response=await ua.watch();
-    console.log(response);
     expect(response).not.toBe(null);
   });
-  // test("get nft success",async()=>{
-  //   let response=await ua.ask("nfts)
-  //   expect(response.status).toBe(200);
-    
-  // });
-  // test("get asset success",async()=>{
-  //   let response=await ua.ask("assets")
-  //   expect(response.status).toBe(200);
-    
-  // });
-  // test("get transaction success",async()=>{
-  //   wallet=new ethers.Wallet(privateKey);
-  //   ua=new UATU();
-  //   ua=await ua.verify(wallet,apiKey);
-  //   let response=await ua.ask("getMETransaction");
-  //   console.log(response);
-  //   expect(response).not.toBe(null);    
-  // });
-  // test("get transaction success",async()=>{
-  //   wallet=new ethers.Wallet(privateKey);
-  //   ua=new UATU();
-  //   ua=await ua.verify(wallet,apiKey);
-  //   let response=await ua.ask("getMETransactionandwallet");
-  //   console.log(response);
-  //   expect(response).not.toBe(null);    
-  // });
+  test("get nft success",async()=>{
+    let response=await ua.ask("nfts");
+    console.log(response)
+    expect(response).not.toBe(200);
+  });
+  test("get asset success",async()=>{
+    let response=await ua.ask("assets")
+    expect(response).not.toBe(null);
+  });
+  test("get transaction success",async()=>{
+    let response=await ua.ask("getMETransaction");
+    expect(response).not.toBe(null);    
+  });
+  test("get transaction success",async()=>{
+    let response=await ua.ask("getMETransactionandwallet");
+    expect(response).not.toBe(null);    
+  });
 
   // test("get wallet Fail as wrong address that does not exist in db is being passed",async()=>{
   //   const options={

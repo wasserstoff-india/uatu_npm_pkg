@@ -1,6 +1,6 @@
-import { askPriceApi, getQueryResult, getWallet, watchPrice } from "../services/apiService";
+import { askPriceApi, getQueryResult, getWallet, watchPrice } from "./services/apiService";
 import {Wallet} from "ethers";
-import { indexOfQueryArray,queryArray,routeArray } from "./constant";
+import { indexOfQueryArray,queryArray,routeArray } from "./constants/constant";
 
 export class UATU {
   private address:string = '';

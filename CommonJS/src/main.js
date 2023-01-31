@@ -37,8 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UATU = void 0;
-var apiService_1 = require("../services/apiService");
-var constant_1 = require("./constant");
+var apiService_1 = require("./services/apiService");
+var constant_1 = require("./constants/constant");
 var UATU = /** @class */ (function () {
     function UATU(wallet, apiKey) {
         this.wallet = wallet;
