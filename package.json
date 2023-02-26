@@ -8,8 +8,8 @@
   "scripts": {
     "test": "jest --detectOpenHandles --testEnvironment=node --runInBand ./tests",
     "build": "webpack",
-    "commonjs": "tsc --build ./tsconfig.json ",
-    "module": "tsc --build ./tsconfig-Es.json",
+    "commonjs": "rm -rf CommonJS && tsc --build ./tsconfig.json ",
+    "module": "rm -rf ESNext && tsc --build ./tsconfig-Es.json",
     "build-dist-libs": "rollup -c rollup-dist.config.js && uglifyjs dist/ethers.umd.js --output dist/ethers.umd.min.js --source-map 'content=dist/ethers.umd.js.map' && uglifyjs dist/ethers.esm.js --output dist/ethers.esm.min.js --source-map 'content=dist/ethers.esm.js.map'",
     "build:publish": "cp ./src/constants/urlVarProd.ts ./src/constants/urlVar.ts && rm -rf CommonJS dist ESNext && npm run commonjs &&  npm run module && npm run build-dist-libs",
     "build:dev": "cp ./src/constants/urlVarDev.ts ./src/constants/urlVar.ts && rm -rf CommonJS dist ESNext && npm run commonjs &&  npm run module && npm run build-dist-libs"

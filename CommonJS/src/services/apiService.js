@@ -107,13 +107,16 @@ var watchPrice = function (headers, query) { return __awaiter(void 0, void 0, vo
 }); };
 exports.watchPrice = watchPrice;
 var askPriceApi = function (headers, query) { return __awaiter(void 0, void 0, void 0, function () {
-    var error_2;
+    var res, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
+                console.log("".concat(urlVar_1.priceTickerUrl, "/price?symbol=").concat(query));
                 return [4 /*yield*/, axios_1.default.get("".concat(urlVar_1.priceTickerUrl, "/price?symbol=").concat(query), headers)];
-            case 1: return [2 /*return*/, _a.sent()];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res.data.data];
             case 2:
                 error_2 = _a.sent();
                 throw new Error(error_2);

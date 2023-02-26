@@ -3,14 +3,14 @@ export declare class UATU {
     private wallet?;
     private address;
     private apiKey;
-    constructor(wallet?: Wallet, apiKey?: string);
+    constructor(apiKey?: string, address?: string, wallet?: Wallet);
     private getSignature;
     private getHeaders;
-    verify(wallet: Wallet, apiKey: string): this;
+    verify(apiKey: string, address?: string, wallet?: Wallet): this;
     watch(): Promise<any>;
     watchPrice(query?: Array<string>): Promise<any>;
-    askPrice(query?: Array<string>): Promise<any>;
-    ask(que: string): Promise<any>;
+    private askPrice;
+    ask(que: string, coinsPayload?: string): Promise<any>;
     private makeQueryString;
     private filterQuery;
 }

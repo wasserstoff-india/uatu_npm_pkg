@@ -55,11 +55,14 @@ export const watchPrice=async(headers:headers,query?:string)=>{
 
 export const askPriceApi=async(headers:headers,query?:string)=>{
   try {
-    return await axios.get(`${priceTickerUrl}/price?symbol=${query}`,headers);
+    console.log(`${priceTickerUrl}/price?symbol=${query}`)
+    let res=await axios.get(`${priceTickerUrl}/price?symbol=${query}`,headers);
+    return res.data.data
   } catch (error) {
     throw new Error(error);
   }
 }
+
 export const getQueryResult=async(query:string,headers:Object,payload:string)=>{
   let res;
   try {    
@@ -85,6 +88,7 @@ export const getQueryResult=async(query:string,headers:Object,payload:string)=>{
     throw new Error(error)
   }
 }
+
 
 
 const transactionResponse=(data:Array<Transaction>)=>{
@@ -205,4 +209,6 @@ type Asset={
     symbol: string,
     chain: string,
 }
+
+
 

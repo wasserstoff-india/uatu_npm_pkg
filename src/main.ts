@@ -6,9 +6,9 @@ export class UATU {
   private address:string = '';
   // private version:string="1.0.1";
   private apiKey:string="";
-  constructor(private wallet?:Wallet,apiKey?:string) {
-    if(wallet) {
-      this.verify(wallet,apiKey!);
+  constructor(apiKey?:string,address?:string,private wallet?:Wallet) {
+    if(wallet || address) {
+      this.verify(apiKey,address,wallet);
     }
   }
 
@@ -31,16 +31,16 @@ export class UATU {
     }
   }
 
-  verify(wallet:Wallet,apiKey:string) {
-    this.wallet=wallet;
-    this.address = wallet.address.toLowerCase();
+  verify(apiKey:string,address?:string,wallet?:Wallet) {
+    this.wallet=wallet ?? null;
+    this.address = address.toLowerCase()?? wallet.address.toLowerCase()  ;
     this.apiKey=apiKey;
     return this;
   }
 
   async watch() {
     try {
-      if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first By passing wallet and apiKey");
+      if(this.address.length<=0 || this.apiKey.length<=0) throw new Error("Call Uatu verify first By passing wallet and apiKey");
       const headers=await this.getHeaders("watch");
       return await getWallet(headers);      
     } catch (error:any) {   
@@ -51,7 +51,7 @@ export class UATU {
   
   async watchPrice(query?:Array<string>){
     try {
-      if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first By passing wallet and apiKey");
+      if(this.address.length<=0 || this.apiKey.length<=0) throw new Error("Call Uatu verify first By passing wallet and apiKey");
       const headers=await this.getHeaders("watchPrice");
       let queryParam:string=this.makeQueryString(query);
       return await watchPrice(headers,queryParam);      
@@ -60,9 +60,9 @@ export class UATU {
       return error["response"];
     }
   }
-  async askPrice(query?:Array<string>){
+  private async askPrice(query?:Array<string>){
     try {
-      if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first By passing wallet and apiKey");
+      if(this.address.length<=0 || this.apiKey.length<=0) throw new Error("Call Uatu verify first By passing wallet and apiKey");
       const headers=await this.getHeaders("askPrice");
       let queryParam:string=this.makeQueryString(query);
       return await askPriceApi(headers,queryParam);      
@@ -71,11 +71,14 @@ export class UATU {
       return error["response"];
     }
   }
-  async ask(que:string) {
+  async ask(que:string,coinsPayload?:string) {
     try {      
-      if(this.address.length<=0 || this.apiKey.length<=0 || !this.wallet) throw new Error("Call Uatu verify first  By passing wallet and apiKey");
+      if(this.address.length<=0 || this.apiKey.length<=0) throw new Error("Call Uatu verify first  By passing wallet and apiKey");
       let query=que;
-      if(que!=="wallet" && que!== "transactions" && que!=="assets" && que!=="nfts"){
+      if(query=="price"){
+        return this.askPrice(coinsPayload.split(","))
+      }
+      if(que!=="wallet" && que!== "transactions" && que!==" " && que!=="nfts"){
         query=this.filterQuery(que);
       }
       const headers=await this.getHeaders(query);
