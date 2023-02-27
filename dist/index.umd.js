@@ -3756,13 +3756,14 @@
 	                switch (_a.label) {
 	                    case 0:
 	                        _a.trys.push([0, 3, , 4]);
+	                        console.log(coinsPayload);
 	                        if (this.address.length <= 0 || this.apiKey.length <= 0)
 	                            throw new Error("Call Uatu verify first  By passing wallet and apiKey");
 	                        query = que;
 	                        if (query == "price") {
 	                            return [2 /*return*/, this.askPrice(coinsPayload.split(","))];
 	                        }
-	                        if (que !== "wallet" && que !== "transactions" && que !== " " && que !== "nfts") {
+	                        if (que !== "wallet" && que !== "transaction" && que !== "asset" && que !== "nft") {
 	                            query = this.filterQuery(que);
 	                        }
 	                        return [4 /*yield*/, this.getHeaders(query)];
@@ -3787,9 +3788,10 @@
 	            if (coin.toUpperCase() == "ALL") {
 	                return "ALL";
 	            }
-	            res += coin.toUpperCase();
+	            res += coin.toUpperCase() + ",";
 	        }
-	        return res;
+	        return res.slice(0, -1);
+	        ;
 	    };
 	    UATU.prototype.filterQuery = function (input) {
 	        var _a;

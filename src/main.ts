@@ -73,12 +73,13 @@ export class UATU {
   }
   async ask(que:string,coinsPayload?:string) {
     try {      
+      console.log(coinsPayload)
       if(this.address.length<=0 || this.apiKey.length<=0) throw new Error("Call Uatu verify first  By passing wallet and apiKey");
       let query=que;
       if(query=="price"){
         return this.askPrice(coinsPayload.split(","))
       }
-      if(que!=="wallet" && que!== "transactions" && que!==" " && que!=="nfts"){
+      if(que!=="wallet" && que!== "transaction" && que!=="asset" && que!=="nft"){
         query=this.filterQuery(que);
       }
       const headers=await this.getHeaders(query);
@@ -95,9 +96,9 @@ export class UATU {
       if(coin.toUpperCase()=="ALL"){
         return "ALL";
       }
-      res+=coin.toUpperCase();
+      res+=coin.toUpperCase()+",";
     }
-    return res;
+    return res.slice(0, -1);;
   }
 
   private filterQuery(input:string){

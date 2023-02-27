@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import EventEmitter from "events";
 export declare const getWallet: (headers: headers) => Promise<EventEmitter>;
 export declare const watchPrice: (headers: headers, query?: string) => Promise<EventEmitter>;
