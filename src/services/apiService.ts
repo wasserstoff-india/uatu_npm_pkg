@@ -67,16 +67,16 @@ export const getQueryResult=async(query:string,headers:Object,payload:string)=>{
   let res;
   try {    
     switch (query) {
-      case "transactions":
+      case "transaction":
         res= await axios.get(`${EVMURL}/getTransactions`,headers);
         return transactionResponse(res.data.data);
       case "wallet":
         res= await axios.get(`${EVMURL}/getWAllet`,headers);        
         return walletResponse(res.data.data);                
-      case "assets":
+      case "asset":
         res= await axios.get(`${EVMURL}/getAssets`,headers);
         return assetResponse(res.data.data);  
-      case "nfts":
+      case "nft":
         res= await axios.get(`${EVMURL}/getNftAssets`,headers);
         return nftResponse(res.data.data);
       default:

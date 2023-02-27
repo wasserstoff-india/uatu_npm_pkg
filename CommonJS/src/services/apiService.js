@@ -133,10 +133,10 @@ var getQueryResult = function (query, headers, payload) { return __awaiter(void 
                 _b.trys.push([0, 12, , 13]);
                 _a = query;
                 switch (_a) {
-                    case "transactions": return [3 /*break*/, 1];
+                    case "transaction": return [3 /*break*/, 1];
                     case "wallet": return [3 /*break*/, 3];
-                    case "assets": return [3 /*break*/, 5];
-                    case "nfts": return [3 /*break*/, 7];
+                    case "asset": return [3 /*break*/, 5];
+                    case "nft": return [3 /*break*/, 7];
                 }
                 return [3 /*break*/, 9];
             case 1: return [4 /*yield*/, axios_1.default.get("".concat(urlVar_1.EVMURL, "/getTransactions"), headers)];
