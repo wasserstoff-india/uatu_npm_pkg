@@ -3315,9 +3315,9 @@
 	"use strict";
 	Object.defineProperty(urlVar, "__esModule", { value: true });
 	var wsEVMURL = urlVar.wsEVMURL = priceTickerUrl = urlVar.priceTickerUrl = EVMURL = urlVar.EVMURL = void 0;
-	var EVMURL = urlVar.EVMURL = "http://localhost:8001";
-	var priceTickerUrl = urlVar.priceTickerUrl = "http://localhost:8006";
-	wsEVMURL = urlVar.wsEVMURL = "ws://localhost:8001";
+	var EVMURL = urlVar.EVMURL = "https://watcher.uatu.xyz";
+	var priceTickerUrl = urlVar.priceTickerUrl = "https://ticker.uatu.xyz";
+	wsEVMURL = urlVar.wsEVMURL = "wss://watcher.uatu.xyz";
 
 	"use strict";
 	var __awaiter$1 = (commonjsGlobal && commonjsGlobal.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -3428,13 +3428,16 @@
 	}); };
 	var watchPrice_1 = apiService.watchPrice = watchPrice;
 	var askPriceApi = function (headers, query) { return __awaiter$1(void 0, void 0, void 0, function () {
-	    var error_2;
+	    var res, error_2;
 	    return __generator$1(this, function (_a) {
 	        switch (_a.label) {
 	            case 0:
 	                _a.trys.push([0, 2, , 3]);
+	                console.log("".concat(urlVar_1.priceTickerUrl, "/price?symbol=").concat(query));
 	                return [4 /*yield*/, axios_1.default.get("".concat(urlVar_1.priceTickerUrl, "/price?symbol=").concat(query), headers)];
-	            case 1: return [2 /*return*/, _a.sent()];
+	            case 1:
+	                res = _a.sent();
+	                return [2 /*return*/, res.data.data];
 	            case 2:
 	                error_2 = _a.sent();
 	                throw new Error(error_2);
@@ -3623,13 +3626,13 @@
 	var apiService_1 = apiService;
 	var constant_1 = constant;
 	var UATU = /** @class */ (function () {
-	    function UATU(wallet, apiKey) {
+	    function UATU(apiKey, address, wallet) {
 	        this.wallet = wallet;
 	        this.address = '';
 	        // private version:string="1.0.1";
 	        this.apiKey = "";
-	        if (wallet) {
-	            this.verify(wallet, apiKey);
+	        if (wallet || address) {
+	            this.verify(apiKey, address, wallet);
 	        }
 	    }
 	    UATU.prototype.getSignature = function (query) {
@@ -3668,9 +3671,10 @@
 	            });
 	        });
 	    };
-	    UATU.prototype.verify = function (wallet, apiKey) {
-	        this.wallet = wallet;
-	        this.address = wallet.address.toLowerCase();
+	    UATU.prototype.verify = function (apiKey, address, wallet) {
+	        var _a;
+	        this.wallet = wallet !== null && wallet !== void 0 ? wallet : null;
+	        this.address = (_a = address.toLowerCase()) !== null && _a !== void 0 ? _a : wallet.address.toLowerCase();
 	        this.apiKey = apiKey;
 	        return this;
 	    };
@@ -3681,7 +3685,7 @@
 	                switch (_a.label) {
 	                    case 0:
 	                        _a.trys.push([0, 3, , 4]);
-	                        if (this.address.length <= 0 || this.apiKey.length <= 0 || !this.wallet)
+	                        if (this.address.length <= 0 || this.apiKey.length <= 0)
 	                            throw new Error("Call Uatu verify first By passing wallet and apiKey");
 	                        return [4 /*yield*/, this.getHeaders("watch")];
 	                    case 1:
@@ -3704,7 +3708,7 @@
 	                switch (_a.label) {
 	                    case 0:
 	                        _a.trys.push([0, 3, , 4]);
-	                        if (this.address.length <= 0 || this.apiKey.length <= 0 || !this.wallet)
+	                        if (this.address.length <= 0 || this.apiKey.length <= 0)
 	                            throw new Error("Call Uatu verify first By passing wallet and apiKey");
 	                        return [4 /*yield*/, this.getHeaders("watchPrice")];
 	                    case 1:
@@ -3728,7 +3732,7 @@
 	                switch (_a.label) {
 	                    case 0:
 	                        _a.trys.push([0, 3, , 4]);
-	                        if (this.address.length <= 0 || this.apiKey.length <= 0 || !this.wallet)
+	                        if (this.address.length <= 0 || this.apiKey.length <= 0)
 	                            throw new Error("Call Uatu verify first By passing wallet and apiKey");
 	                        return [4 /*yield*/, this.getHeaders("askPrice")];
 	                    case 1:
@@ -3745,17 +3749,20 @@
 	            });
 	        });
 	    };
-	    UATU.prototype.ask = function (que) {
+	    UATU.prototype.ask = function (que, coinsPayload) {
 	        return __awaiter(this, void 0, void 0, function () {
 	            var query, headers, error_4;
 	            return __generator(this, function (_a) {
 	                switch (_a.label) {
 	                    case 0:
 	                        _a.trys.push([0, 3, , 4]);
-	                        if (this.address.length <= 0 || this.apiKey.length <= 0 || !this.wallet)
+	                        if (this.address.length <= 0 || this.apiKey.length <= 0)
 	                            throw new Error("Call Uatu verify first  By passing wallet and apiKey");
 	                        query = que;
-	                        if (que !== "wallet" && que !== "transactions" && que !== "assets" && que !== "nfts") {
+	                        if (query == "price") {
+	                            return [2 /*return*/, this.askPrice(coinsPayload.split(","))];
+	                        }
+	                        if (que !== "wallet" && que !== "transactions" && que !== " " && que !== "nfts") {
 	                            query = this.filterQuery(que);
 	                        }
 	                        return [4 /*yield*/, this.getHeaders(query)];

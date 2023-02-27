@@ -1,7 +1,7 @@
 import EventEmitter from "events";
 export declare const getWallet: (headers: headers) => Promise<EventEmitter>;
 export declare const watchPrice: (headers: headers, query?: string) => Promise<EventEmitter>;
-export declare const askPriceApi: (headers: headers, query?: string) => Promise<import("axios").AxiosResponse<any, any>>;
+export declare const askPriceApi: (headers: headers, query?: string) => Promise<any>;
 export declare const getQueryResult: (query: string, headers: Object, payload: string) => Promise<import("axios").AxiosResponse<any, any> | Transaction[] | Asset[] | NFT[] | {
     walletAddress: string;
     assets: Asset[];

@@ -1,4 +1,4 @@
-export declare const EVMURL = "http://localhost:8001";
-export declare const priceTickerUrl = "http://localhost:8006";
-export declare const wsEVMURL = "ws://localhost:8001";
+export declare const EVMURL = "https://watcher.uatu.xyz";
+export declare const priceTickerUrl = "https://ticker.uatu.xyz";
+export declare const wsEVMURL = "wss://watcher.uatu.xyz";
 //# sourceMappingURL=urlVar.d.ts.map
