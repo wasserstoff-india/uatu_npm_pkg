@@ -1,6 +1,6 @@
 {
   "name": "uatujs",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "npm library for UATU API",
   "main": "./CommonJS/src/index.js",
   "module": "./ESNext/src/index.js",
